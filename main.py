@@ -2,13 +2,14 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 
-heart_path = r"C:\Users\Simon\PycharmData\heart\heart.csv"
-df = pd.read_csv(heart_path)
-df.head()
-print(df.shape)
-df.describe()
-
-df = df.drop(columns=['thal', 'cp'])
+file_path = r"C:\Users\Simon\PycharmData\heart\heart.csv"
+df = pd.read_csv(file_path)
+df.hist(figsize=(30,30))
+corrmat = df.corr()
+top_corr_features = corrmat.index
+plt.figure(figsize=(20,20))
+#plot heat map
+g=sns.heatmap(df[top_corr_features].corr(),annot=True,cmap="RdYlGn")
 
 # create a dataframe with training data expect Outcome column
 X = df.drop(columns=['target'])
