@@ -1,6 +1,33 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+# data modeling
+import os
+from sklearn.metrics import confusion_matrix, accuracy_score, roc_curve, classification_report
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn import metrics
+import seaborn as sns
+
+from sklearn import datasets
+from sklearn import tree
+
+# class KNN:
+#     def __init__(self, k=3):
+#         self.k = k
+#
+#     def fit(self, X, y):
+#         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1234, stratify=y)
+#         self.X_train = X_train
+#         self.X_test = X_test
+#         self.y_train = y_train
+#         self.y_test = y_test
+#         pass
+#
+#     def predict(self, X):
+#         pass
 
 file_path = r"C:\Users\Simon\PycharmData\heart\heart.csv"
 df = pd.read_csv(file_path)
@@ -20,10 +47,13 @@ X = df.drop('target',axis=1)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state = 4)
 # split dataset
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1, stratify=y)
+#X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1, stratify=y)
+
+#
+# print(X_train.shape)
 
 # Create KNN classifier
-knn = KNeighborsClassifier(n_neighbors=17)
+# knn = KNeighborsClassifier(n_neighbors=10)
 
 # Fit the classifier to the data
 # knn.fit(X_train, y_train)
