@@ -2,17 +2,18 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
+# from sklearn.ensemble import RandomForestClassifier
 # data modeling
-import os
-from sklearn.metrics import confusion_matrix, accuracy_score, roc_curve, classification_report
-import matplotlib.pyplot as plt
-import numpy as np
-from sklearn import metrics
-import seaborn as sns
+# import os
+from sklearn.metrics import accuracy_score
+# from sklearn.metrics import confusion_matrix, roc_curve, classification_report
+# import matplotlib.pyplot as plt
+# import numpy as np
+# from sklearn import metrics
+# import seaborn as sns
 
-from sklearn import datasets
-from sklearn import tree
+# from sklearn import datasets
+# from sklearn import tree
 
 # class KNN:
 #     def __init__(self, k=3):
@@ -40,10 +41,10 @@ plt.figure(figsize=(20,20))
 g=sns.heatmap(df[top_corr_features].corr(),annot=True,cmap="RdYlGn")
 
 # create a dataframe with training data expect Outcome column
-#X = df.drop(columns=['target'])
-#y = df['target'].values
+# X = df.drop(columns=['target'])
+# y = df['target'].values
 y = df["target"]
-X = df.drop('target',axis=1)
+X = df.drop('target', axis=1)
 # Z = df.drop('target')
 
 # split dataset into test and train data. The size of the test data can be altered
