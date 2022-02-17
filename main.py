@@ -29,6 +29,7 @@ from sklearn import tree
 #     def predict(self, X):
 #         pass
 
+# import dataset
 file_path = r"C:\Users\Simon\PycharmData\heart\heart.csv"
 df = pd.read_csv(file_path)
 df.hist(figsize=(30,30))
@@ -45,11 +46,10 @@ y = df["target"]
 X = df.drop('target',axis=1)
 # Z = df.drop('target')
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state = 4)
-# split dataset
-#X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1, stratify=y)
+# split dataset into test and train data. The size of the test data can be altered
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=4)
 
-#
+
 # print(X_train.shape)
 
 # Create KNN classifier
