@@ -64,7 +64,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random
 
 # print(knn.score(X_test, y_test))
 
-m5 = 'K-NeighborsClassifier'
+
 knn = KNeighborsClassifier(n_neighbors=10)
 knn.fit(X_train, y_train)
 knn_predicted = knn.predict(X_test)
@@ -108,7 +108,6 @@ plt.xlabel('K')
 plt.ylabel('Accuracy')
 print("Maximum accuracy:-", max(acc), "at K =", acc.index(max(acc)))
 
-m6 = 'DecisionTreeClassifier'
 dt = DecisionTreeClassifier(criterion='entropy', random_state=0, max_depth=6)
 dt.fit(X_train, y_train)
 dt_predicted = dt.predict(X_test)
