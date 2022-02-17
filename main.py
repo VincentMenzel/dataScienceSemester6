@@ -50,6 +50,7 @@ X = df.drop('target', axis=1)
 # split dataset into test and train data. The size of the test data can be altered
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=4)
 
+print(df.head, '\n')
 
 # print(X_train.shape)
 
@@ -65,67 +66,70 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random
 
 # print(knn.score(X_test, y_test))
 
-
+# m5 = 'K-NeighborsClassifier'
 knn = KNeighborsClassifier(n_neighbors=10)
 knn.fit(X_train, y_train)
 knn_predicted = knn.predict(X_test)
-knn_conf_matrix = confusion_matrix(y_test, knn_predicted)
 knn_acc_score = accuracy_score(y_test, knn_predicted)
-print("confusion matrix")
-print(knn_conf_matrix)
-print("\n")
-print("Accuracy of K-NeighborsClassifier:", knn_acc_score * 100, '\n')
-print(classification_report(y_test, knn_predicted))
+print("KNN: ", '\n')
+print("N_Neighbors: ", knn.n_neighbors)
+print("Accuracy:", knn_acc_score * 100, '\n')
+# ML print(classification_report(y_test, knn_predicted))
 
 
-error_rate = []
-for i in range(1,40):
-    knn = KNeighborsClassifier(n_neighbors=i)
-    knn.fit(X_train,y_train)
-    pred_i = knn.predict(X_test)
-    error_rate.append(np.mean(pred_i != y_test))
+# ML error_rate = []
+# ML for i in range(1,40):
+# ML     knn = KNeighborsClassifier(n_neighbors=i)
+# ML     knn.fit(X_train,y_train)
+# ML     pred_i = knn.predict(X_test)
+# ML     error_rate.append(np.mean(pred_i != y_test))
+# ML
+# ML plt.figure(figsize=(10,6))
+# ML plt.plot(range(1,40),error_rate,color='blue', linestyle='dashed',
+# ML          marker='o',markerfacecolor='red', markersize=10)
+# ML plt.title('Error Rate vs. K Value')
+# ML plt.xlabel('K')
+# ML plt.ylabel('Error Rate')
+# ML print("Minimum error:-",min(error_rate),"at K =",error_rate.index(min(error_rate)))
+# ML
+# ML acc = []
+# ML # Will take some time
+# ML
+# ML for i in range(1, 40):
+# ML     neigh = KNeighborsClassifier(n_neighbors=i).fit(X_train, y_train)
+# ML     yhat = neigh.predict(X_test)
+# ML     acc.append(metrics.accuracy_score(y_test, yhat))
+# ML
+# ML plt.figure(figsize=(10, 6))
+# ML plt.plot(range(1, 40), acc, color='blue', linestyle='dashed',
+# ML          marker='o', markerfacecolor='red', markersize=10)
+# ML plt.title('Accuracy vs. K Value')
+# ML plt.xlabel('K')
+# ML plt.ylabel('Accuracy')
+# ML print("Maximum accuracy:-", max(acc), "at K =", acc.index(max(acc)))
 
-plt.figure(figsize=(10,6))
-plt.plot(range(1,40),error_rate,color='blue', linestyle='dashed',
-         marker='o',markerfacecolor='red', markersize=10)
-plt.title('Error Rate vs. K Value')
-plt.xlabel('K')
-plt.ylabel('Error Rate')
-print("Minimum error:-",min(error_rate),"at K =",error_rate.index(min(error_rate)))
-
-acc = []
-# Will take some time
-
-for i in range(1, 40):
-    neigh = KNeighborsClassifier(n_neighbors=i).fit(X_train, y_train)
-    yhat = neigh.predict(X_test)
-    acc.append(metrics.accuracy_score(y_test, yhat))
-
-plt.figure(figsize=(10, 6))
-plt.plot(range(1, 40), acc, color='blue', linestyle='dashed',
-         marker='o', markerfacecolor='red', markersize=10)
-plt.title('Accuracy vs. K Value')
-plt.xlabel('K')
-plt.ylabel('Accuracy')
-print("Maximum accuracy:-", max(acc), "at K =", acc.index(max(acc)))
 
 dt = DecisionTreeClassifier(criterion='entropy', random_state=0, max_depth=6)
 dt.fit(X_train, y_train)
 dt_predicted = dt.predict(X_test)
-dt_conf_matrix = confusion_matrix(y_test, dt_predicted)
 dt_acc_score = accuracy_score(y_test, dt_predicted)
 
-text_representation = tree.export_text(dt)
-print(text_representation)
-with open("decistion_tree.log", "w") as fout:
-    fout.write(text_representation)
+print("Decision Tree:", '\n')
+print("Depth:", dt.max_depth)
+print("Accuracy:", dt_acc_score * 100, '\n')
+# print(classification_report(y_test, dt_predicted))
 
-fig = plt.figure(figsize=(50,7), dpi=350)
-_ = tree.plot_tree(dt,
-                    fontsize=7,
-                   feature_names=['age','sex','cp','trestbps','chol','fbs','restecg','thalach','exang','oldpeak','slope','ca','thal'],
-                   class_names=['has heart disease','no has heart disease'],
-                   filled=True, rounded=True)
+# ML text_representation = tree.export_text(dt)
+# ML print(text_representation)
+# ML with open("decistion_tree.log", "w") as fout:
+# ML     fout.write(text_representation)
+
+# ML fig = plt.figure(figsize=(50,7), dpi=350)
+# ML _ = tree.plot_tree(dt,
+# ML                     fontsize=7,
+# ML                    feature_names=['age','sex','cp','trestbps','chol','fbs','restecg','thalach','exang','oldpeak','slope','ca','thal'],
+# ML                    class_names=['has heart disease','no has heart disease'],
+# ML                    filled=True, rounded=True)
 
 # from dtreeviz.trees import dtreeviz # remember to load the package
 #
@@ -136,21 +140,16 @@ _ = tree.plot_tree(dt,
 # viz.view()
 # viz.save("decision_tree.png")
 
-print("confusion matrix")
-print("\n")
-print("Accuracy of DecisionTreeClassifier:", dt_acc_score * 100, '\n')
-print(classification_report(y_test, dt_predicted))
-
-error_rate = []
-for i in range(1,40):
-    dt = DecisionTreeClassifier(criterion='entropy', random_state=0, max_depth=i)
-    dt.fit(X_train, y_train)
-    pred_i = dt.predict(X_test)
-    error_rate.append(np.mean(pred_i != y_test))
-plt.figure(figsize=(10,6))
-plt.plot(range(1,40),error_rate,color='blue', linestyle='dashed',
-         marker='o',markerfacecolor='red', markersize=3)
-plt.title('Error Rate vs. max_depth Value (DecisionTreeClassifier)')
-plt.xlabel('K')
-plt.ylabel('Error Rate')
-plt.show()
+# ML error_rate = []
+# ML for i in range(1,40):
+# ML     dt = DecisionTreeClassifier(criterion='entropy', random_state=0, max_depth=i)
+# ML     dt.fit(X_train, y_train)
+# ML     pred_i = dt.predict(X_test)
+# ML     error_rate.append(np.mean(pred_i != y_test))
+# ML plt.figure(figsize=(10,6))
+# ML plt.plot(range(1,40),error_rate,color='blue', linestyle='dashed',
+# ML          marker='o',markerfacecolor='red', markersize=3)
+# ML plt.title('Error Rate vs. max_depth Value (DecisionTreeClassifier)')
+# ML plt.xlabel('K')
+# ML plt.ylabel('Error Rate')
+# ML plt.show()
